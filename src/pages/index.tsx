@@ -2,8 +2,9 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '@/styles/Home.module.css'
+import { signIn, signOut } from "@/firebase/google";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
@@ -26,7 +27,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{' '}
+              By{" "}
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
@@ -116,8 +117,26 @@ export default function Home() {
               with&nbsp;Vercel.
             </p>
           </a>
+
+          <button
+            className={styles.card}
+            onClick={() => {
+              signIn();
+            }}
+          >
+            <h2 className={inter.className}>SignIn</h2>
+          </button>
+
+          <button
+            className={styles.card}
+            onClick={() => {
+              signOut();
+            }}
+          >
+            <h2 className={inter.className}>SignOut</h2>
+          </button>
         </div>
       </main>
     </>
-  )
+  );
 }
