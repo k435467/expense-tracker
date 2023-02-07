@@ -19,7 +19,7 @@ export const NavMenu: React.FC<{}> = () => {
   const { asPath } = useRouter();
   if (!user) return <div />;
   return (
-    <div className="w-full grid grid-cols-3 border">
+    <div className="w-full grid grid-cols-3 border-t">
       {menuItems.map((v) => (
         <Link key={v.url} href={v.url}>
           <div className="w-full p-3 flex items-center justify-center">

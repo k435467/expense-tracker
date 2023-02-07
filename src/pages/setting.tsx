@@ -1,9 +1,17 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { signOut } from "@/firebase/google";
 import { useProtectedRoute } from "@/hooks/auth";
 
 export default function Setting() {
+  const router = useRouter();
   const { user } = useProtectedRoute();
+
+  const handleSignOut = () => {
+    signOut().then(() => {
+      router.push("/");
+    });
+  };
 
   if (!user) return null;
 
@@ -14,7 +22,7 @@ export default function Setting() {
       <div className="text-xl">{user?.displayName}</div>
       <button
         className="w-full border-2 rounded flex items-center justify-center p-1 gap-1.5 border-rose-500 text-white bg-rose-500"
-        onClick={signOut}
+        onClick={handleSignOut}
       >
         SIGN OUT
       </button>

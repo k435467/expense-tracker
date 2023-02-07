@@ -18,7 +18,7 @@ const signIn = () => {
 };
 
 const signOut = () => {
-  signOutAlias(auth);
+  return signOutAlias(auth);
   //   .then(() => {
   //     // Sign-out successful.
   //   })

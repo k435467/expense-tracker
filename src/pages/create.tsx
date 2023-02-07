@@ -1,5 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
+import { Switch } from "@/components/Switch";
+import { CreatePanel } from "@/components/CreatePanel";
+import {
+  MdOutlineLunchDining,
+  MdOutlineRamenDining,
+  MdOutlineBrunchDining,
+  MdOutlineEmojiFoodBeverage,
+  MdOutlineTapas,
+  MdOutlineLocalBar,
+  MdOutlineDirectionsCar,
+  MdOutlineShoppingBag,
+  MdOutlineSportsEsports,
+  MdOutlineLight,
+  MdOutlineHouseSiding,
+  MdOutlineMedicalServices,
+  MdOutlineGroup,
+  MdOutlineCardGiftcard,
+  MdOutlineDevicesOther,
+  MdOutlineWorkspaces,
+} from "react-icons/md";
 
-export default function List() {
-  return <div>Create</div>;
+const categories = [
+  { Icon: MdOutlineLunchDining, title: "Breakfast" },
+  { Icon: MdOutlineRamenDining, title: "Lunch" },
+  { Icon: MdOutlineBrunchDining, title: "Dinner" },
+  { Icon: MdOutlineEmojiFoodBeverage, title: "Drinks" },
+  { Icon: MdOutlineTapas, title: "Snack" },
+  { Icon: MdOutlineLocalBar, title: "Alcohol" },
+  { Icon: MdOutlineDirectionsCar, title: "Traffic" },
+  { Icon: MdOutlineShoppingBag, title: "Shopping" },
+  { Icon: MdOutlineSportsEsports, title: "Entertainment" },
+  { Icon: MdOutlineLight, title: "Housing" },
+  { Icon: MdOutlineHouseSiding, title: "Rent" },
+  { Icon: MdOutlineMedicalServices, title: "Medical" },
+  { Icon: MdOutlineGroup, title: "Social" },
+  { Icon: MdOutlineCardGiftcard, title: "Gift" },
+  { Icon: MdOutlineDevicesOther, title: "Eletronics" },
+  { Icon: MdOutlineWorkspaces, title: "Other" },
+];
+
+export default function Create() {
+  const [isIncome, setIsIncome] = useState<boolean>(false);
+
+  return (
+    <div className="flex flex-col items-center m-auto p-6 gap-4">
+      <Switch l="Expense" r="Income" value={isIncome} setValue={setIsIncome} />
+
+      <div className="w-full grid grid-cols-4">
+        {categories.map((cat) => (
+          <div
+            key={cat.title}
+            className="w-full flex flex-col items-center justify-center aspect-square text-sm"
+          >
+            <cat.Icon className="text-3xl" />
+            {cat.title}
+          </div>
+        ))}
+      </div>
+
+      <CreatePanel />
+    </div>
+  );
 }

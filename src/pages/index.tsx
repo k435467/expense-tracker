@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useAuth } from "@/hooks/auth";
 import { signIn } from "@/firebase/google";
 import { MdMoneyOff } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
+
+/**
+ * redirect if user has logged in
+ */
+const useRedirect = () => {
+  const router = useRouter();
+  const { user, loading } = useAuth();
+  useEffect(() => {
+    if (!loading && user) {
+      router.push("/create");
+    }
+  });
+};
 
 const SignInButton: React.FC<{
   children: React.ReactNode;
@@ -20,6 +35,7 @@ const SignInButton: React.FC<{
 };
 
 export default function Home() {
+  useRedirect();
   return (
     <div className="flex flex-col items-center m-auto p-6 gap-4">
       <div className="h-[10vh]" />

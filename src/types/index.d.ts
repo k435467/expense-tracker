@@ -11,6 +11,6 @@ export interface UserInfo {
 }
 
 export interface AuthState {
-  user: UserInfo | null;
-  loading: boolean;
+  readonly user: UserInfo | null;
+  readonly loading: boolean;
 }
