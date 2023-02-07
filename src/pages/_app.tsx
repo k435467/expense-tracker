@@ -1,8 +1,8 @@
 import '@/styles/globals.css'
 import Head from "next/head";
 import type { AppProps } from "next/app";
-import { AuthUserProvider } from "@/components/auth";
-import { Container } from "@/components/container";
+import { AuthUserProvider } from "@/components/Auth";
+import { Layout } from "@/components/Layout";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -14,9 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container>
+      <Layout>
         <Component {...pageProps} />
-      </Container>
+      </Layout>
     </AuthUserProvider>
   );
 }

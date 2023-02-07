@@ -1,14 +1,18 @@
 import React from "react";
-import { signIn, signOut } from "@/firebase/google";
+import { signIn } from "@/firebase/google";
 import { MdMoneyOff } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 
-const SignInButton: React.FC<{ children: React.ReactNode; title: string }> = ({
-  children,
-  title,
-}) => {
+const SignInButton: React.FC<{
+  children: React.ReactNode;
+  title: string;
+  onClick: () => void;
+}> = ({ children, title, onClick }) => {
   return (
-    <button className="w-full border-2 rounded flex items-center justify-center p-1 gap-1.5">
+    <button
+      className="w-full border-2 rounded flex items-center justify-center p-1 gap-1.5"
+      onClick={onClick}
+    >
       {children}
       <div className="text-lg">{title}</div>
     </button>
@@ -17,18 +21,18 @@ const SignInButton: React.FC<{ children: React.ReactNode; title: string }> = ({
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center m-auto p-6 gap-2">
-      <div className="h-[10vh]"></div>
+    <div className="flex flex-col items-center m-auto p-6 gap-4">
+      <div className="h-[10vh]" />
       <div>
-        <MdMoneyOff className="text-7xl my-8" />
+        <MdMoneyOff className="text-7xl my-6" />
       </div>
-      <div className="text-3xl font-bold mb-3">Sign In</div>
+      <div className="text-3xl font-bold mb-2">Sign In</div>
 
-      <SignInButton title="Continue with Google">
+      <SignInButton title="Continue with Google" onClick={signIn}>
         <FcGoogle className="text-lg" />
       </SignInButton>
 
-      <hr className="w-full my-4" />
+      <hr className="w-full my-2" />
 
       <div className="text-sm font-thin mt-[-0.25rem] flex flex-col items-center">
         Secured by Firebase
