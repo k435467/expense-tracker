@@ -43,7 +43,7 @@ export default function Create() {
   const [isIncome, setIsIncome] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col items-center m-auto p-6 gap-4">
+    <div className="flex flex-col [&>div]:flex-shrink-0 overflow-auto items-center m-auto px-6 pt-10 pb-[32rem] gap-4 h-full">
       <Switch l="Expense" r="Income" value={isIncome} setValue={setIsIncome} />
 
       <div className="w-full grid grid-cols-4">

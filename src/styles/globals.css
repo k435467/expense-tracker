@@ -4,8 +4,14 @@
 
 :root {
   background-color: #fff;
+  height: 100vh;
 }
 
 body {
   margin: 0;
+  height: 100%;
+}
+
+#__next {
+  height: 100%;
 }

@@ -14,3 +14,11 @@ export interface AuthState {
   readonly user: UserInfo | null;
   readonly loading: boolean;
 }
+
+export interface Record {
+  isIncome: boolean;
+  category: string;
+  title: string;
+  money: number;
+  date: string;
+}
