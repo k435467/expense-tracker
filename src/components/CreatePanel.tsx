@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "@/components/Container";
 import { IconType } from "react-icons/lib";
-import { MdOutlineLunchDining } from "react-icons/md";
 import {
   RiNumber1,
   RiNumber2,
@@ -19,16 +18,25 @@ import {
 } from "react-icons/ri";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/firebase/index";
-import {Record} from '@/types'
+import { Category, KeyActions, Record } from "@/types";
+import { useAuth } from "@/hooks/auth";
+import { Toast, useToast } from "@/components/Toast";
+import { createPortal } from "react-dom";
 
-const addRecord = async (record: Record) => {
-  console.log('adding')
-  try{
-    const docRef = await addDoc(collection(db, "record"), record);
-    console.log('document written with ID: ', docRef.id)
-  } catch(e) {
-    console.error('Error adding document: ', e)
-  }
+const addRecord = (userId: string | undefined, record: Record) => {
+  return new Promise(async (resolve, reject) => {
+    if (!userId)
+      return reject(new Error("Error adding document: userId is undefined!"));
+    try {
+      const docRef = await addDoc(collection(db, userId), record);
+      if (docRef.id) {
+        return resolve(true);
+        // console.log("document written with ID: ", docRef.id);
+      }
+    } catch (e) {
+      return reject(new Error("Error adding document: " + e));
+    }
+  });
 };
 
 const maxDigit = 12;
@@ -44,17 +52,20 @@ const nKeys = [
   { Icon: RiNumber9, value: 9 },
   { Icon: RiNumber0, value: 0 },
 ];
-const aKeys: { Icon: IconType; value: "back" | "clear" | "ok" }[] = [
+const aKeys: { Icon: IconType; value: KeyActions }[] = [
   { Icon: RiArrowLeftLine, value: "back" },
   { Icon: RiCloseLine, value: "clear" },
   { Icon: RiCheckLine, value: "ok" },
 ];
 
-export const CreatePanel: React.FC<{}> = () => {
+export const CreatePanel: React.FC<{ selCat: Category }> = ({ selCat }) => {
+  const { user } = useAuth();
   const [title, setTitle] = useState<string>("");
   const [num, setNum] = useState<number>(0);
+  const toast = useToast();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    createPortal(<div id="toast123">123</div>, document.body);
     setTitle(e.target.value);
   };
 
@@ -62,7 +73,7 @@ export const CreatePanel: React.FC<{}> = () => {
     if (num.toString().length < maxDigit) setNum((n) => n * 10 + value);
   };
 
-  const mkHandlePressAKey = (value: "back" | "clear" | "ok") => () => {
+  const mkHandlePressAKey = (value: KeyActions) => () => {
     switch (value) {
       case "back":
         setNum((n) => Math.floor(n / 10));
@@ -71,9 +82,22 @@ export const CreatePanel: React.FC<{}> = () => {
         setNum(0);
         return;
       case "ok":
-        addRecord({category: '', date: '', isIncome: false, money: num, title})
-        setNum(0)
-        setTitle('')
+        addRecord(user?.uid, {
+          category: selCat.title,
+          date: "",
+          isIncome: false,
+          money: num,
+          title,
+        })
+          .then(() => {
+            toast.display("Add Successfully!");
+          })
+          .catch((e) => {
+            toast.display("Failed to Add!");
+            console.error(e);
+          });
+        setNum(0);
+        setTitle("");
         return;
       default:
         return;
@@ -82,9 +106,11 @@ export const CreatePanel: React.FC<{}> = () => {
 
   return (
     <div className="absolute bottom-0 left-0 right-0">
+      <Toast show={toast.show} title={toast.title} />
+
       <Container className="mb-12 border-t bg-white">
         <div className="flex items-center">
-          <MdOutlineLunchDining className="text-3xl m-3 shrink-0" />
+          <selCat.Icon className="text-3xl m-3 shrink-0" />
           <div className="flex-grow">
             <input
               className="text-xl shrink border-0 outline-none"
@@ -100,9 +126,9 @@ export const CreatePanel: React.FC<{}> = () => {
             $ {num.toLocaleString("en-US")}
           </div>
         </div>
-        <div className="border-t">
-          <div className="text-center">calendar</div>
-          <div className="grid grid-cols-4 p-4">
+        <div className="border-t flex flex-col items-center">
+          <input type="date" />
+          <div className="w-full grid grid-cols-4 p-4">
             <div className="col-span-3 grid grid-cols-3">
               {nKeys.map((k) => (
                 <button

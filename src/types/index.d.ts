@@ -1,3 +1,5 @@
+import { IconType } from "react-icons/lib";
+
 /**
  * User profile information
  */
@@ -22,3 +24,10 @@ export interface Record {
   money: number;
   date: string;
 }
+
+export interface Category {
+  Icon: IconType;
+  title: string;
+}
+
+export type KeyActions = "back" | "clear" | "ok";

@@ -19,8 +19,10 @@ import {
   MdOutlineDevicesOther,
   MdOutlineWorkspaces,
 } from "react-icons/md";
+import { useProtectedRoute } from "@/hooks/auth";
+import { Category } from "@/types";
 
-const categories = [
+const categories: Category[] = [
   { Icon: MdOutlineLunchDining, title: "Breakfast" },
   { Icon: MdOutlineRamenDining, title: "Lunch" },
   { Icon: MdOutlineBrunchDining, title: "Dinner" },
@@ -40,25 +42,32 @@ const categories = [
 ];
 
 export default function Create() {
+  useProtectedRoute();
   const [isIncome, setIsIncome] = useState<boolean>(false);
+  const [selCat, setSelCat] = useState<Category>(categories[0]);
+
+  const mkHandleClk = (idx: number) => () => {
+    setSelCat(categories[idx]);
+  };
 
   return (
     <div className="flex flex-col [&>div]:flex-shrink-0 overflow-auto items-center m-auto px-6 pt-10 pb-[32rem] gap-4 h-full">
       <Switch l="Expense" r="Income" value={isIncome} setValue={setIsIncome} />
 
       <div className="w-full grid grid-cols-4">
-        {categories.map((cat) => (
-          <div
+        {categories.map((cat, idx) => (
+          <button
             key={cat.title}
-            className="w-full flex flex-col items-center justify-center aspect-square text-sm"
+            className={`w-full flex flex-col items-center justify-center aspect-square text-sm ${cat.title === selCat.title && 'bg-slate-100 rounded-md'}`}
+            onClick={mkHandleClk(idx)}
           >
             <cat.Icon className="text-3xl" />
             {cat.title}
-          </div>
+          </button>
         ))}
       </div>
 
-      <CreatePanel />
+      <CreatePanel selCat={selCat} />
     </div>
   );
 }

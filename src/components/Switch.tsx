@@ -1,7 +1,7 @@
 import React from "react";
 
 const btnCls = "p-1.5 text-base rounded transition";
-const activeCls = "bg-slate-300";
+const activeCls = "bg-slate-100";
 
 export const Switch: React.FC<{
   value: boolean;
