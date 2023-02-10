@@ -41,6 +41,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 1. [doc](https://firebase.google.com/docs/web/setup?authuser=0)
 2. [tutorial](https://blog.logrocket.com/implementing-authentication-in-next-js-with-firebase/)
+3. [git ignorecase](https://vercel.com/guides/how-do-i-resolve-a-module-not-found-error)
 
 ## ENV
 
