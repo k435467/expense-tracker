@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/__/auth/:path*",
+      "destination": "https://expense-tracker-91928.firebaseapp.com/__/auth/:path*"
+    },
+    {
+      "source": "/__/auth/:path*/",
+      "destination": "https://expense-tracker-91928.firebaseapp.com/__/auth/:path*/"
+    }
+  ]
+}
