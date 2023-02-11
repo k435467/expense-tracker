@@ -39,9 +39,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## My Notes
 
-1. [doc](https://firebase.google.com/docs/web/setup?authuser=0)
-2. [tutorial](https://blog.logrocket.com/implementing-authentication-in-next-js-with-firebase/)
+1. [firebase doc](https://firebase.google.com/docs/web/setup?authuser=0)
+2. [tutorial for firebase auth with nextjs](https://blog.logrocket.com/implementing-authentication-in-next-js-with-firebase/)
 3. [git ignorecase](https://vercel.com/guides/how-do-i-resolve-a-module-not-found-error)
+4. [firebase-tools issue](https://github.com/firebase/firebase-tools/issues/5369) - Solved by using version 11.18.0
 
 ## ENV
 
