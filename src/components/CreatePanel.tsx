@@ -16,28 +16,12 @@ import {
   RiCloseLine,
   RiCheckLine,
 } from "react-icons/ri";
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "@/firebase/index";
-import { Category, KeyActions, Record } from "@/types";
-import { useAuth } from "@/hooks/auth";
+import { Category, KeyActions } from "@/types";
+import { useAuth } from "@/utils/auth";
 import { Toast, useToast } from "@/components/Toast";
 import { createPortal } from "react-dom";
-
-const addRecord = (userId: string | undefined, record: Record) => {
-  return new Promise(async (resolve, reject) => {
-    if (!userId)
-      return reject(new Error("Error adding document: userId is undefined!"));
-    try {
-      const docRef = await addDoc(collection(db, userId), record);
-      if (docRef.id) {
-        return resolve(true);
-        // console.log("document written with ID: ", docRef.id);
-      }
-    } catch (e) {
-      return reject(new Error("Error adding document: " + e));
-    }
-  });
-};
+import { useInputDate } from "@/utils/input";
+import { addRecord } from "@/utils/firestore";
 
 const maxDigit = 12;
 const nKeys = [
@@ -58,11 +42,15 @@ const aKeys: { Icon: IconType; value: KeyActions }[] = [
   { Icon: RiCheckLine, value: "ok" },
 ];
 
-export const CreatePanel: React.FC<{ selCat: Category }> = ({ selCat }) => {
+export const CreatePanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
+  selCat,
+  isIncome,
+}) => {
   const { user } = useAuth();
   const [title, setTitle] = useState<string>("");
   const [num, setNum] = useState<number>(0);
   const toast = useToast();
+  const { date, handleChange } = useInputDate();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     createPortal(<div id="toast123">123</div>, document.body);
@@ -84,10 +72,10 @@ export const CreatePanel: React.FC<{ selCat: Category }> = ({ selCat }) => {
       case "ok":
         addRecord(user?.uid, {
           category: selCat.title,
-          date: "",
-          isIncome: false,
-          money: num,
+          date,
+          money: isIncome ? num : -num,
           title,
+          uid: Date.now().toString(),
         })
           .then(() => {
             toast.display("Add Successfully!");
@@ -113,10 +101,10 @@ export const CreatePanel: React.FC<{ selCat: Category }> = ({ selCat }) => {
           <selCat.Icon className="text-3xl m-3 shrink-0" />
           <div className="flex-grow">
             <input
-              className="text-xl shrink border-0 outline-none"
+              className="text-xl shrink border-0 outline-none w-full"
               type="text"
               name="title"
-              maxLength={25}
+              maxLength={40}
               value={title}
               placeholder="Title"
               onChange={handleInput}
@@ -127,7 +115,13 @@ export const CreatePanel: React.FC<{ selCat: Category }> = ({ selCat }) => {
           </div>
         </div>
         <div className="border-t flex flex-col items-center">
-          <input type="date" />
+          <input
+            type="date"
+            min="2000-01-01"
+            max="2100-01-01"
+            value={date}
+            onChange={handleChange}
+          />
           <div className="w-full grid grid-cols-4 p-4">
             <div className="col-span-3 grid grid-cols-3">
               {nKeys.map((k) => (

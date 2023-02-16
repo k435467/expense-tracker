@@ -1,5 +1,5 @@
 import React from "react";
-import { useFirebaseAuth, authContext } from "@/hooks/auth";
+import { useFirebaseAuth, authContext } from "@/utils/auth";
 
 /**
  * context provider. use useAuth to retrieve the value

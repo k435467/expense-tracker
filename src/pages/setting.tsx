@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { signOut } from "@/firebase/google";
-import { useProtectedRoute } from "@/hooks/auth";
+import { useProtectedRoute } from "@/utils/auth";
 
 export default function Setting() {
   const router = useRouter();

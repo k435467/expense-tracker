@@ -40,7 +40,7 @@ export const Toast: React.FC<{ show: boolean; title: React.ReactNode }> = ({
 }) => {
   return (
     <div
-      className={`p-4 rounded-md bg-gray-700 transition-opacity text-white text-lg fixed top-1/2 left-1/2 translate-center ${
+      className={`p-4 rounded-md bg-gray-700 transition-opacity text-white text-lg fixed top-1/2 left-1/2 translate-center pointer-events-none ${
         show ? "opacity-100" : "opacity-0"
       }`}
     >

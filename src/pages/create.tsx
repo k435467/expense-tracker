@@ -1,45 +1,9 @@
 import React, { useState } from "react";
 import { Switch } from "@/components/Switch";
 import { CreatePanel } from "@/components/CreatePanel";
-import {
-  MdOutlineLunchDining,
-  MdOutlineRamenDining,
-  MdOutlineBrunchDining,
-  MdOutlineEmojiFoodBeverage,
-  MdOutlineTapas,
-  MdOutlineLocalBar,
-  MdOutlineDirectionsCar,
-  MdOutlineShoppingBag,
-  MdOutlineSportsEsports,
-  MdOutlineLight,
-  MdOutlineHouseSiding,
-  MdOutlineMedicalServices,
-  MdOutlineGroup,
-  MdOutlineCardGiftcard,
-  MdOutlineDevicesOther,
-  MdOutlineWorkspaces,
-} from "react-icons/md";
-import { useProtectedRoute } from "@/hooks/auth";
+import { useProtectedRoute } from "@/utils/auth";
 import { Category } from "@/types";
-
-const categories: Category[] = [
-  { Icon: MdOutlineLunchDining, title: "Breakfast" },
-  { Icon: MdOutlineRamenDining, title: "Lunch" },
-  { Icon: MdOutlineBrunchDining, title: "Dinner" },
-  { Icon: MdOutlineEmojiFoodBeverage, title: "Drinks" },
-  { Icon: MdOutlineTapas, title: "Snack" },
-  { Icon: MdOutlineLocalBar, title: "Alcohol" },
-  { Icon: MdOutlineDirectionsCar, title: "Traffic" },
-  { Icon: MdOutlineShoppingBag, title: "Shopping" },
-  { Icon: MdOutlineSportsEsports, title: "Entertainment" },
-  { Icon: MdOutlineLight, title: "Housing" },
-  { Icon: MdOutlineHouseSiding, title: "Rent" },
-  { Icon: MdOutlineMedicalServices, title: "Medical" },
-  { Icon: MdOutlineGroup, title: "Social" },
-  { Icon: MdOutlineCardGiftcard, title: "Gift" },
-  { Icon: MdOutlineDevicesOther, title: "Eletronics" },
-  { Icon: MdOutlineWorkspaces, title: "Other" },
-];
+import { categories } from "@/utils";
 
 export default function Create() {
   useProtectedRoute();
@@ -58,7 +22,9 @@ export default function Create() {
         {categories.map((cat, idx) => (
           <button
             key={cat.title}
-            className={`w-full flex flex-col items-center justify-center aspect-square text-sm ${cat.title === selCat.title && 'bg-slate-100 rounded-md'}`}
+            className={`w-full flex flex-col items-center justify-center aspect-square text-sm ${
+              cat.title === selCat.title && "bg-slate-100 rounded-md"
+            }`}
             onClick={mkHandleClk(idx)}
           >
             <cat.Icon className="text-3xl" />
@@ -67,7 +33,7 @@ export default function Create() {
         ))}
       </div>
 
-      <CreatePanel selCat={selCat} />
+      <CreatePanel selCat={selCat} isIncome={isIncome} />
     </div>
   );
 }

@@ -18,16 +18,16 @@ export interface AuthState {
 }
 
 export interface Record {
-  isIncome: boolean;
   category: string;
   title: string;
   money: number;
   date: string;
+  uid: string;
 }
 
 export interface Category {
-  Icon: IconType;
-  title: string;
+  readonly Icon: IconType;
+  readonly title: string;
 }
 
 export type KeyActions = "back" | "clear" | "ok";

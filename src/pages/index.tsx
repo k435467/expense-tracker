@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from "@/hooks/auth";
+import { useAuth } from "@/utils/auth";
 import { signIn } from "@/firebase/google";
 import { MdMoneyOff } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";

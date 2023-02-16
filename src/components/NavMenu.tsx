@@ -6,7 +6,7 @@ import {
   AiOutlinePlusCircle,
   AiOutlineSetting,
 } from "react-icons/ai";
-import { useAuth } from "@/hooks/auth";
+import { useAuth } from "@/utils/auth";
 
 const menuItems = [
   { Icon: AiOutlineUnorderedList, url: "/list" },
