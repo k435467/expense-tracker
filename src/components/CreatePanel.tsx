@@ -19,7 +19,6 @@ import {
 import { Category, KeyActions } from "@/types";
 import { useAuth } from "@/utils/auth";
 import { Toast, useToast } from "@/components/Toast";
-import { createPortal } from "react-dom";
 import { useInputDate } from "@/utils/input";
 import { addRecord } from "@/utils/firestore";
 
@@ -53,7 +52,6 @@ export const CreatePanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
   const { date, handleChange } = useInputDate();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    createPortal(<div id="toast123">123</div>, document.body);
     setTitle(e.target.value);
   };
 
@@ -75,17 +73,17 @@ export const CreatePanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
           date,
           money: isIncome ? num : -num,
           title,
-          uid: Date.now().toString(),
+          createTime: Date.now().toString(),
         })
           .then(() => {
             toast.display("Add Successfully!");
+            setNum(0);
+            setTitle("");
           })
           .catch((e) => {
             toast.display("Failed to Add!");
             console.error(e);
           });
-        setNum(0);
-        setTitle("");
         return;
       default:
         return;
@@ -96,8 +94,8 @@ export const CreatePanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
     <div className="absolute bottom-0 left-0 right-0">
       <Toast show={toast.show} title={toast.title} />
 
-      <Container className="mb-12 border-t bg-white">
-        <div className="flex items-center">
+      <Container className="mb-12 bg-white">
+        <div className="flex items-center border-y">
           <selCat.Icon className="text-3xl m-3 shrink-0" />
           <div className="flex-grow">
             <input
@@ -114,7 +112,8 @@ export const CreatePanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
             $ {num.toLocaleString("en-US")}
           </div>
         </div>
-        <div className="border-t flex flex-col items-center">
+
+        <div className="flex justify-center mt-2 mb-[-0.5rem]">
           <input
             type="date"
             min="2000-01-01"
@@ -122,29 +121,30 @@ export const CreatePanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
             value={date}
             onChange={handleChange}
           />
-          <div className="w-full grid grid-cols-4 p-4">
-            <div className="col-span-3 grid grid-cols-3">
-              {nKeys.map((k) => (
-                <button
-                  key={k.value}
-                  className="w-full flex justify-center items-center last:col-span-3"
-                  onClick={mkHandlePressNKey(k.value)}
-                >
-                  <k.Icon className="text-3xl m-4" />
-                </button>
-              ))}
-            </div>
-            <div className="grid grid-cols-1 grid-rows-4">
-              {aKeys.map((k) => (
-                <button
-                  key={k.value}
-                  className="w-full flex justify-center items-center last:row-span-2 last:bg-slate-100 last:rounded-md"
-                  onClick={mkHandlePressAKey(k.value)}
-                >
-                  <k.Icon className="text-3xl m-4" />
-                </button>
-              ))}
-            </div>
+        </div>
+
+        <div className="w-full grid grid-cols-4 p-4">
+          <div className="col-span-3 grid grid-cols-3">
+            {nKeys.map((k) => (
+              <button
+                key={k.value}
+                className="w-full flex justify-center items-center last:col-span-3"
+                onClick={mkHandlePressNKey(k.value)}
+              >
+                <k.Icon className="text-3xl m-4" />
+              </button>
+            ))}
+          </div>
+          <div className="grid grid-cols-1 grid-rows-4">
+            {aKeys.map((k) => (
+              <button
+                key={k.value}
+                className="w-full flex justify-center items-center last:row-span-2 last:bg-slate-100 last:rounded-md"
+                onClick={mkHandlePressAKey(k.value)}
+              >
+                <k.Icon className="text-3xl m-4" />
+              </button>
+            ))}
           </div>
         </div>
       </Container>

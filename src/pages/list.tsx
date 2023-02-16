@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useInputMonth } from "@/utils/input";
 import { RecordItem } from "@/components/RecordItem";
 import { getRecords } from "@/utils/firestore";
-import { useAuth, useProtectedRoute } from "@/utils/auth";
+import { useProtectedRoute } from "@/utils/auth";
 import { Record } from "@/types";
 
 export default function List() {
-  useProtectedRoute();
-  const { user } = useAuth();
+  const { user } = useProtectedRoute();
   const { month, handleChange } = useInputMonth();
   const [records, setRecords] = useState<Record[]>([]);
   const [total, setTotal] = useState<number>(0);
@@ -42,14 +41,17 @@ export default function List() {
         onChange={handleChange}
       />
 
-      <div>{total.toLocaleString("en-US")}</div>
+      {records.length > 0 && <div>${total.toLocaleString("en-US")}</div>}
 
       <div className="flex flex-col overflow-auto items-center gap-4 wider-box">
         {records.map((record) => (
-          <RecordItem key={record.uid} {...record} />
+          <RecordItem key={record.createTime} {...record} />
         ))}
         {records.length === 0 && <div>No Records</div>}
-        <div className="h-10 flex-shrink-0" />
+        {records.length > 0 && (
+          <div className="text-slate-400">{`${records.length} Result(s)`}</div>
+        )}
+        <div className="h-20 flex-shrink-0" />
       </div>
     </div>
   );

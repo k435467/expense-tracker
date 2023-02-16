@@ -2,7 +2,12 @@ import React from "react";
 import { Record } from "@/types";
 import { categories } from "@/utils";
 
-export const RecordItem: React.FC<Record> = ({ category, date, money, title }) => {
+export const RecordItem: React.FC<Record> = ({
+  category,
+  date,
+  money,
+  title,
+}) => {
   const cat = categories.find((v) => v.title === category) || categories[0];
 
   return (

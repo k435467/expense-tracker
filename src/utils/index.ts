@@ -15,10 +15,16 @@ import {
   MdOutlineCardGiftcard,
   MdOutlineDevicesOther,
   MdOutlineWorkspaces,
+  MdOutlineMonetizationOn,
+  MdOutlineMoneyOff,
+  MdOutlineCardMembership,
+  MdOutlineLeaderboard,
+  MdOutlineAccountBalanceWallet,
 } from "react-icons/md";
+import { FaRegHandshake } from "react-icons/fa";
 import { Category } from "@/types";
 
-export const categories: Category[] = [
+export const expCategories: Category[] = [
   { Icon: MdOutlineLunchDining, title: "Breakfast" },
   { Icon: MdOutlineRamenDining, title: "Lunch" },
   { Icon: MdOutlineBrunchDining, title: "Dinner" },
@@ -36,3 +42,16 @@ export const categories: Category[] = [
   { Icon: MdOutlineDevicesOther, title: "Eletronics" },
   { Icon: MdOutlineWorkspaces, title: "Other" },
 ];
+
+export const incoCategories: Category[] = [
+  { Icon: MdOutlineMonetizationOn, title: "Salary" },
+  { Icon: MdOutlineMoneyOff, title: "Bonus" },
+  { Icon: MdOutlineCardMembership, title: "Rebate" },
+  { Icon: FaRegHandshake, title: "Trade" },
+  { Icon: MdOutlineLeaderboard, title: "Dividend" },
+  { Icon: MdOutlineHouseSiding, title: "Rent" },
+  { Icon: MdOutlineAccountBalanceWallet, title: "Investment" },
+  { Icon: MdOutlineWorkspaces, title: "Other" },
+];
+
+export const categories = [...expCategories, ...incoCategories];

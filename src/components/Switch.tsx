@@ -12,6 +12,7 @@ export const Switch: React.FC<{
   const mkHandleClk = (isRhs: boolean) => () => {
     setValue(isRhs);
   };
+
   return (
     <div className="relative grid grid-cols-2 border rounded">
       <button

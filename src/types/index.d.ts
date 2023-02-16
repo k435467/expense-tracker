@@ -22,7 +22,7 @@ export interface Record {
   title: string;
   money: number;
   date: string;
-  uid: string;
+  createTime: string;
 }
 
 export interface Category {
