@@ -1,7 +1,7 @@
 import React from "react";
+import { theme } from "@/utils";
 
-const btnCls = "p-1.5 text-base rounded transition";
-const activeCls = "bg-slate-100";
+const btnCls = "p-1.5 text-base rounded";
 
 export const Switch: React.FC<{
   value: boolean;
@@ -13,16 +13,18 @@ export const Switch: React.FC<{
     setValue(isRhs);
   };
 
+  // TODO - element.clientWidth
+
   return (
-    <div className="relative grid grid-cols-2 border rounded">
+    <div className="grid grid-cols-2 border rounded">
       <button
-        className={`${btnCls} ${!value && activeCls}`}
+        className={`${btnCls} ${!value && theme.bgR}`}
         onClick={mkHandleClk(false)}
       >
         {l}
       </button>
       <button
-        className={`${btnCls} ${value && activeCls}`}
+        className={`${btnCls} ${value && theme.bgB}`}
         onClick={mkHandleClk(true)}
       >
         {r}

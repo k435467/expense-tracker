@@ -49,7 +49,7 @@ export default function List() {
         ))}
         {records.length === 0 && <div>No Records</div>}
         {records.length > 0 && (
-          <div className="text-slate-400">{`${records.length} Result(s)`}</div>
+          <div className="text-slate-300">{`${records.length} Result(s)`}</div>
         )}
         <div className="h-20 flex-shrink-0" />
       </div>

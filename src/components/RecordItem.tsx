@@ -1,6 +1,6 @@
 import React from "react";
 import { Record } from "@/types";
-import { categories } from "@/utils";
+import { categories, theme } from "@/utils";
 
 export const RecordItem: React.FC<Record> = ({
   category,
@@ -9,16 +9,19 @@ export const RecordItem: React.FC<Record> = ({
   title,
 }) => {
   const cat = categories.find((v) => v.title === category) || categories[0];
+  const borderLColor = money < 0 ? theme.bLR : theme.bLB;
 
   return (
-    <div className="flex flex-col border rounded-md w-full p-2 gap-2">
+    <div
+      className={`flex flex-col border rounded-md w-full p-2 gap-2 border-l-8 ${borderLColor}`}
+    >
       <div className="flex justify-between">
-        <div>{date}</div>
+        <div className="text-slate-300">{date}</div>
         <div>${money.toLocaleString("en-US")}</div>
       </div>
 
       <div className="flex items-center">
-        <cat.Icon className="text-xl flex-shrink-0" />
+        <cat.Icon className="text-xl flex-shrink-0 text-slate-600" />
         <div className="ml-2 overflow-hidden whitespace-nowrap text-ellipsis">
           {title}
         </div>

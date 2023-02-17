@@ -7,6 +7,7 @@ import {
   AiOutlineSetting,
 } from "react-icons/ai";
 import { useAuth } from "@/utils/auth";
+import { theme } from "@/utils";
 
 const menuItems = [
   { Icon: AiOutlineUnorderedList, url: "/list" },
@@ -23,11 +24,18 @@ export const NavMenu: React.FC<{}> = () => {
       {menuItems.map((v) => (
         <Link key={v.url} href={v.url}>
           <div className="w-full p-3 flex items-center justify-center">
-            <v.Icon
-              className={`text-2xl ${
-                !asPath.startsWith(v.url) && " text-slate-400"
-              }`}
-            />
+            <div className="relative">
+              <v.Icon
+                className={`relative z-10 text-2xl text-slate-400 ${
+                  asPath.startsWith(v.url) && "text-black "
+                }`}
+              />
+              <div
+                className={`absolute top-0 bottom-0 left-0 right-0 rounded-full ${
+                  asPath.startsWith(v.url) && theme.bgY
+                }`}
+              />
+            </div>
           </div>
         </Link>
       ))}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Switch } from "@/components/Switch";
-import { CreatePanel } from "@/components/CreatePanel";
+import { InputPanel } from "@/components/InputPanel";
 import { useProtectedRoute } from "@/utils/auth";
 import { CategoryList, useCategoryList } from "@/components/CategoryList";
 
@@ -21,7 +21,7 @@ export default function Create() {
         <CategoryList {...incoCat} />
       </div>
 
-      <CreatePanel
+      <InputPanel
         selCat={isIncome ? incoCat.selCat : expCat.selCat}
         isIncome={isIncome}
       />

@@ -21,6 +21,7 @@ import { useAuth } from "@/utils/auth";
 import { Toast, useToast } from "@/components/Toast";
 import { useInputDate } from "@/utils/input";
 import { addRecord } from "@/utils/firestore";
+import { theme } from "@/utils";
 
 const maxDigit = 12;
 const nKeys = [
@@ -41,7 +42,7 @@ const aKeys: { Icon: IconType; value: KeyActions }[] = [
   { Icon: RiCheckLine, value: "ok" },
 ];
 
-export const CreatePanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
+export const InputPanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
   selCat,
   isIncome,
 }) => {
@@ -60,6 +61,7 @@ export const CreatePanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
   };
 
   const mkHandlePressAKey = (value: KeyActions) => () => {
+    if (num === 0) return;
     switch (value) {
       case "back":
         setNum((n) => Math.floor(n / 10));
@@ -96,7 +98,14 @@ export const CreatePanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
 
       <Container className="mb-12 bg-white">
         <div className="flex items-center border-y">
-          <selCat.Icon className="text-3xl m-3 shrink-0" />
+          <div className="relative text-3xl m-3 shrink-0">
+            <selCat.Icon className="relative text-3xl z-10" />
+            <div
+              className={`absolute top-0 bottom-0 right-0 left-0 rounded-full ${
+                isIncome ? theme.bgB : theme.bgR
+              }`}
+            />
+          </div>
           <div className="flex-grow">
             <input
               className="text-xl shrink border-0 outline-none w-full"
@@ -136,10 +145,12 @@ export const CreatePanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
             ))}
           </div>
           <div className="grid grid-cols-1 grid-rows-4">
-            {aKeys.map((k) => (
+            {aKeys.map((k, idx) => (
               <button
                 key={k.value}
-                className="w-full flex justify-center items-center last:row-span-2 last:bg-slate-100 last:rounded-md"
+                className={`w-full flex justify-center items-center last:row-span-2 rounded-md ${
+                  idx === 2 && theme.bgY
+                }`}
                 onClick={mkHandlePressAKey(k.value)}
               >
                 <k.Icon className="text-3xl m-4" />

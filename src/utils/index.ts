@@ -24,6 +24,14 @@ import {
 import { FaRegHandshake } from "react-icons/fa";
 import { Category } from "@/types";
 
+export const theme = {
+  bgR: "bg-rose-50",
+  bgB: "bg-cyan-50",
+  bgY: "bg-[#FDECC8]/60",
+  bLR: "border-l-rose-100",
+  bLB: "border-l-cyan-100",
+};
+
 export const expCategories: Category[] = [
   { Icon: MdOutlineLunchDining, title: "Breakfast" },
   { Icon: MdOutlineRamenDining, title: "Lunch" },
