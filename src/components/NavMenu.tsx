@@ -10,7 +10,7 @@ import { useAuth } from "@/utils/auth";
 import { theme } from "@/utils";
 
 const menuItems = [
-  { Icon: AiOutlineUnorderedList, url: "/list" },
+  { Icon: AiOutlineUnorderedList, url: "/records" },
   { Icon: AiOutlinePlusCircle, url: "/create" },
   { Icon: AiOutlineSetting, url: "/setting" },
 ];

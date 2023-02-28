@@ -23,6 +23,7 @@ import {
 } from "react-icons/md";
 import { FaRegHandshake } from "react-icons/fa";
 import { Category } from "@/types";
+import { useState } from "react";
 
 export const theme = {
   bgR: "bg-rose-50",
@@ -30,6 +31,11 @@ export const theme = {
   bgY: "bg-[#FDECC8]/60",
   bLR: "border-l-rose-100",
   bLB: "border-l-cyan-100",
+  bG: "border-emerald-400",
+  bgG: "bg-emerald-400",
+  bDangerous: "border-rose-500",
+  bgDangerous: "bg-rose-500",
+  btn: "border-2 rounded p-1",
 };
 
 export const expCategories: Category[] = [
@@ -63,3 +69,27 @@ export const incoCategories: Category[] = [
 ];
 
 export const categories = [...expCategories, ...incoCategories];
+
+/**
+ * index to indicate a element is selected from a list
+ */
+export const useListSelect = () => {
+  const init = -1;
+  const [sel, setSel] = useState<number>(init);
+
+  const mkHandleSel = (idx: number) => () => {
+    if (sel === idx) setSel(init);
+    else setSel(idx);
+  };
+
+  const reset = () => {
+    setSel(init);
+  };
+
+  return {
+    sel,
+    setSel,
+    mkHandleSel,
+    reset,
+  };
+};

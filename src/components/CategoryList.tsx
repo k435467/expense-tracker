@@ -4,10 +4,21 @@ import { expCategories, incoCategories, theme } from "@/utils";
 
 type CategoryListVariant = "exp" | "inco";
 
-export const useCategoryList = (variant: CategoryListVariant) => {
+/**
+ * @param init category title
+ */
+export const useCategoryList = (
+  variant: CategoryListVariant,
+  init?: string
+) => {
   const categories = variant === "exp" ? expCategories : incoCategories;
 
-  const [selCat, setSelCat] = useState<Category>(categories[0]);
+  const [selCat, setSelCat] = useState<Category>(() => {
+    if (init) {
+      return categories.find((v) => v.title === init) ?? categories[0];
+    }
+    return categories[0];
+  });
 
   const mkHandleClk = (idx: number) => () => {
     setSelCat(categories[idx]);

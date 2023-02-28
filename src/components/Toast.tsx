@@ -1,46 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { clearToast, selectToast } from "@/redux/toastSlice";
 
-const toastTimeout = 2000;
+const duration = 2000;
 
-/**
- * get states and auto close after timeout.
- * render a Toast component before use this hook
- *
- * @return display - use this function to show a toast.
- */
-export const useToast = () => {
-  const [show, setShow] = useState<boolean>(false);
-  const [title, setTitle] = useState<string>("");
+export const Toast: React.FC<{}> = () => {
+  const { show, title, indicator } = useAppSelector(selectToast);
+  const dipatch = useAppDispatch();
+  const timeoutID = useRef<NodeJS.Timeout>();
 
+  // Clear after duration.
+  // If there is another display() being dispatched,
+  // remove previous timeout to avoid extra clear()
   useEffect(() => {
-    if (show) {
-      setTimeout(() => {
-        setShow(false);
-      }, toastTimeout);
+    if (timeoutID.current) {
+      clearTimeout(timeoutID.current);
     }
-  }, [show]);
 
-  const display = (title: string) => {
-    setTitle(title);
-    setShow(true);
-  };
+    timeoutID.current = setTimeout(() => {
+      dipatch(clearToast());
+      timeoutID.current = undefined;
+    }, duration);
+  }, [indicator]);
 
-  return {
-    show,
-    setShow,
-    title,
-    setTitle,
-    display,
-  };
-};
-
-export const Toast: React.FC<{ show: boolean; title: React.ReactNode }> = ({
-  show,
-  title,
-}) => {
   return (
     <div
-      className={`p-4 rounded-md bg-gray-700 transition-opacity text-white text-lg fixed top-1/2 left-1/2 translate-center pointer-events-none ${
+      className={`translate-center pointer-events-none fixed top-1/2 left-1/2 z-10 rounded-2xl bg-gray-700 p-4 text-center text-lg text-white transition-opacity ${
         show ? "opacity-100" : "opacity-0"
       }`}
     >

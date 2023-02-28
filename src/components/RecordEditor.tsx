@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { Switch } from "@/components/Switch";
 import { InputPanel } from "@/components/InputPanel";
-import { useProtectedRoute } from "@/utils/auth";
 import { CategoryList, useCategoryList } from "@/components/CategoryList";
+import { Record } from "@/types";
 
-export default function Create() {
-  useProtectedRoute();
-  const [isIncome, setIsIncome] = useState<boolean>(false);
-  const expCat = useCategoryList("exp"); // TODO - Reset after record creation. redux
-  const incoCat = useCategoryList("inco");
+export const RecordEditor: React.FC<{ record?: Record }> = ({ record }) => {
+  const [isIncome, setIsIncome] = useState<boolean>((record?.money ?? -1) > 0);
+  const expCat = useCategoryList("exp", record?.category); // TODO - Reset after record creation. redux
+  const incoCat = useCategoryList("inco", record?.category);
 
   return (
     <div className="m-auto flex h-full flex-col items-center gap-4 overflow-auto px-6 pt-10 pb-[40rem] [&>div]:flex-shrink-0">
@@ -24,7 +23,8 @@ export default function Create() {
       <InputPanel
         selCat={isIncome ? incoCat.selCat : expCat.selCat}
         isIncome={isIncome}
+        record={record}
       />
     </div>
   );
-}
+};

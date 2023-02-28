@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { Container } from "@/components/Container";
 import { IconType } from "react-icons/lib";
 import {
@@ -16,12 +17,13 @@ import {
   RiCloseLine,
   RiCheckLine,
 } from "react-icons/ri";
-import { Category, KeyActions } from "@/types";
+import { Category, KeyActions, Record } from "@/types";
 import { useAuth } from "@/utils/auth";
-import { Toast, useToast } from "@/components/Toast";
 import { useInputDate } from "@/utils/input";
-import { addRecord } from "@/utils/firestore";
+import { addRecord,updateRecord } from "@/utils/firestore";
 import { theme } from "@/utils";
+import { useAppDispatch } from "@/redux/store";
+import { showToast } from "@/redux/toastSlice";
 
 const maxDigit = 12;
 const nKeys = [
@@ -42,15 +44,17 @@ const aKeys: { Icon: IconType; value: KeyActions }[] = [
   { Icon: RiCheckLine, value: "ok" },
 ];
 
-export const InputPanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
-  selCat,
-  isIncome,
-}) => {
+export const InputPanel: React.FC<{
+  selCat: Category;
+  isIncome: boolean;
+  record?: Record;
+}> = ({ selCat, isIncome, record }) => {
+  const router=  useRouter()
   const { user } = useAuth();
-  const [title, setTitle] = useState<string>("");
-  const [num, setNum] = useState<number>(0);
-  const toast = useToast();
-  const { date, handleChange } = useInputDate();
+  const [title, setTitle] = useState<string>(record?.title ?? "");
+  const [num, setNum] = useState<number>(Math.abs(record?.money ?? 0));
+  const { date, handleChange } = useInputDate(record?.date);
+  const dispatch = useAppDispatch();
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -70,22 +74,33 @@ export const InputPanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
         setNum(0);
         return;
       case "ok":
-        addRecord(user?.uid, {
+        const newRecord = {
           category: selCat.title,
           date,
           money: isIncome ? num : -num,
           title,
           createTime: Date.now().toString(),
-        })
-          .then(() => {
-            toast.display("Add Successfully!");
-            setNum(0);
-            setTitle("");
-          })
-          .catch((e) => {
-            toast.display("Failed to Add!");
+        }
+        if (record?.createTime) {
+          updateRecord(user?.uid, record, newRecord).then(() => {
+            dispatch(showToast("Update Successfully!"));
+            router.push('/records')
+          }).catch((e) => {
+            dispatch(showToast("Failed to Update!"));
             console.error(e);
           });
+        } else {
+          addRecord(user?.uid, newRecord)
+            .then(() => {
+              dispatch(showToast("Add Successfully!"));
+              setNum(0);
+              setTitle("");
+            })
+            .catch((e) => {
+              dispatch(showToast("Failed to Add!"));
+              console.error(e);
+            });
+        }
         return;
       default:
         return;
@@ -94,12 +109,10 @@ export const InputPanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
 
   return (
     <div className="absolute bottom-0 left-0 right-0">
-      <Toast show={toast.show} title={toast.title} />
-
       <Container className="mb-12 bg-white">
         <div className="flex items-center border-y">
-          <div className="relative text-3xl m-3 shrink-0">
-            <selCat.Icon className="relative text-3xl z-10" />
+          <div className="relative m-3 shrink-0 text-3xl">
+            <selCat.Icon className="relative z-10 text-3xl" />
             <div
               className={`absolute top-0 bottom-0 right-0 left-0 rounded-full ${
                 isIncome ? theme.bgB : theme.bgR
@@ -108,7 +121,7 @@ export const InputPanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
           </div>
           <div className="flex-grow">
             <input
-              className="text-xl shrink border-0 outline-none w-full"
+              className="w-full shrink border-0 text-xl outline-none"
               type="text"
               name="title"
               maxLength={40}
@@ -117,12 +130,12 @@ export const InputPanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
               onChange={handleInput}
             />
           </div>
-          <div className="m-3 text-lg shrink-0">
+          <div className="m-3 shrink-0 text-lg">
             $ {num.toLocaleString("en-US")}
           </div>
         </div>
 
-        <div className="flex justify-center mt-2 mb-[-0.5rem]">
+        <div className="mt-2 mb-[-0.5rem] flex justify-center">
           <input
             type="date"
             min="2000-01-01"
@@ -132,15 +145,15 @@ export const InputPanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
           />
         </div>
 
-        <div className="w-full grid grid-cols-4 p-4">
+        <div className="grid w-full grid-cols-4 p-4">
           <div className="col-span-3 grid grid-cols-3">
             {nKeys.map((k) => (
               <button
                 key={k.value}
-                className="w-full flex justify-center items-center last:col-span-3"
+                className="flex w-full items-center justify-center last:col-span-3"
                 onClick={mkHandlePressNKey(k.value)}
               >
-                <k.Icon className="text-3xl m-4" />
+                <k.Icon className="m-4 text-3xl" />
               </button>
             ))}
           </div>
@@ -148,12 +161,12 @@ export const InputPanel: React.FC<{ selCat: Category; isIncome: boolean }> = ({
             {aKeys.map((k, idx) => (
               <button
                 key={k.value}
-                className={`w-full flex justify-center items-center last:row-span-2 rounded-md ${
+                className={`flex w-full items-center justify-center rounded-md last:row-span-2 ${
                   idx === 2 && theme.bgY
                 }`}
                 onClick={mkHandlePressAKey(k.value)}
               >
-                <k.Icon className="text-3xl m-4" />
+                <k.Icon className="m-4 text-3xl" />
               </button>
             ))}
           </div>
