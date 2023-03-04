@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useInputMonth } from "@/utils/input";
 import { RecordItem } from "@/components/RecordItem";
 import { delRecord, getRecords } from "@/utils/firestore";
-import { useProtectedRoute } from "@/utils/auth";
+import { useAuth } from "@/utils/auth";
 import { useListSelect, theme } from "@/utils";
 import { Record } from "@/types";
 import { Modal } from "@/components/Modal";
@@ -11,17 +11,16 @@ import { showToast } from "@/redux/toastSlice";
 import { edit } from "@/redux/recordEditorSlice";
 import { useRouter } from "next/router";
 
-export default function List() {
-  const { user } = useProtectedRoute();
+export default function Records() {
+  const { user } = useAuth();
   const { month, handleChange } = useInputMonth();
   const [records, setRecords] = useState<Record[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [total, setTotal] = useState<number>(0);
   const lsSel = useListSelect();
   const [showModal, setShowModal] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
-
-  // TODO - isLoading
 
   // TODO - cache
 
@@ -29,6 +28,7 @@ export default function List() {
   useEffect(() => {
     console.log("fetched");
     if (user?.uid) {
+      setIsLoading(true);
       getRecords(user.uid, month)
         .then((res) => {
           let t = 0;
@@ -40,6 +40,9 @@ export default function List() {
         })
         .catch((e) => {
           console.error(e);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
   }, [month, user?.uid || ""]);
@@ -82,24 +85,29 @@ export default function List() {
         <div className="flex-shrink-0">${total.toLocaleString("en-US")}</div>
       )}
 
-      <div className="wider-box flex flex-col items-center gap-4 overflow-auto">
-        {records.map((record, idx) => (
-          <RecordItem
-            key={record.createTime}
-            {...record}
-            onClick={lsSel.mkHandleSel(idx)}
-            isSelected={lsSel.sel === idx}
-            onDelete={() => {
-              setShowModal(true);
-            }}
-            onEdit={handleEdit}
-          />
-        ))}
-        {records.length === 0 && <div>No Records</div>}
+      <div className="flex w-full flex-col items-center gap-4">
+        {isLoading && <div>Loading...</div>}
+        {!isLoading &&
+          (records.length === 0 ? (
+            <div>No Records</div>
+          ) : (
+            records.map((record, idx) => (
+              <RecordItem
+                key={record.createTime}
+                {...record}
+                onClick={lsSel.mkHandleSel(idx)}
+                isSelected={lsSel.sel === idx}
+                onDelete={() => {
+                  setShowModal(true);
+                }}
+                onEdit={handleEdit}
+              />
+            ))
+          ))}
         {records.length > 0 && (
           <div className="text-slate-300">{`${records.length} Result(s)`}</div>
         )}
-        <div className="h-20 flex-shrink-0" />
+        <div className="h-28 flex-shrink-0" />
       </div>
 
       <Modal

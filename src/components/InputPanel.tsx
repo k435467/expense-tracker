@@ -24,6 +24,7 @@ import { addRecord,updateRecord } from "@/utils/firestore";
 import { theme } from "@/utils";
 import { useAppDispatch } from "@/redux/store";
 import { showToast } from "@/redux/toastSlice";
+import { markReset } from "@/redux/recordEditorSlice";
 
 const maxDigit = 12;
 const nKeys = [
@@ -49,7 +50,7 @@ export const InputPanel: React.FC<{
   isIncome: boolean;
   record?: Record;
 }> = ({ selCat, isIncome, record }) => {
-  const router=  useRouter()
+  const router = useRouter();
   const { user } = useAuth();
   const [title, setTitle] = useState<string>(record?.title ?? "");
   const [num, setNum] = useState<number>(Math.abs(record?.money ?? 0));
@@ -80,19 +81,22 @@ export const InputPanel: React.FC<{
           money: isIncome ? num : -num,
           title,
           createTime: Date.now().toString(),
-        }
+        };
         if (record?.createTime) {
-          updateRecord(user?.uid, record, newRecord).then(() => {
-            dispatch(showToast("Update Successfully!"));
-            router.push('/records')
-          }).catch((e) => {
-            dispatch(showToast("Failed to Update!"));
-            console.error(e);
-          });
+          updateRecord(user?.uid, record, newRecord)
+            .then(() => {
+              dispatch(showToast("Update Successfully!"));
+              router.push("/records");
+            })
+            .catch((e) => {
+              dispatch(showToast("Failed to Update!"));
+              console.error(e);
+            });
         } else {
           addRecord(user?.uid, newRecord)
             .then(() => {
               dispatch(showToast("Add Successfully!"));
+              dispatch(markReset());
               setNum(0);
               setTitle("");
             })
@@ -108,7 +112,7 @@ export const InputPanel: React.FC<{
   };
 
   return (
-    <div className="absolute bottom-0 left-0 right-0">
+    <div className="fixed bottom-0 left-0 right-0">
       <Container className="mb-12 bg-white">
         <div className="flex items-center border-y">
           <div className="relative m-3 shrink-0 text-3xl">

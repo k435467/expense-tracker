@@ -13,15 +13,21 @@ export const useCategoryList = (
 ) => {
   const categories = variant === "exp" ? expCategories : incoCategories;
 
-  const [selCat, setSelCat] = useState<Category>(() => {
+  const getInit = () => {
     if (init) {
       return categories.find((v) => v.title === init) ?? categories[0];
     }
     return categories[0];
-  });
+  };
+
+  const [selCat, setSelCat] = useState<Category>(() => getInit());
 
   const mkHandleClk = (idx: number) => () => {
     setSelCat(categories[idx]);
+  };
+
+  const reset = () => {
+    setSelCat(getInit());
   };
 
   return {
@@ -30,6 +36,7 @@ export const useCategoryList = (
     mkHandleClk,
     categories,
     variant,
+    reset,
   };
 };
 

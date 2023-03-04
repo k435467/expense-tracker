@@ -25,7 +25,7 @@ export const Toast: React.FC<{}> = () => {
 
   return (
     <div
-      className={`translate-center pointer-events-none fixed top-1/2 left-1/2 z-10 rounded-2xl bg-gray-700 p-4 text-center text-lg text-white transition-opacity ${
+      className={`translate-center pointer-events-none fixed top-1/2 left-1/2 z-10 rounded-2xl bg-gray-700 p-4 text-center text-lg text-white transition-opacity duration-300 ${
         show ? "opacity-100" : "opacity-0"
       }`}
     >

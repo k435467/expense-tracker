@@ -4,9 +4,12 @@ import { RootState } from "./store";
 
 interface RecordEditorState {
   og?: Record;
+  reset: boolean;
 }
 
-const initialState: RecordEditorState = {};
+const initialState: RecordEditorState = {
+  reset: false,
+};
 
 export const recordEditorSlice = createSlice({
   name: "recordEditor",
@@ -15,13 +18,21 @@ export const recordEditorSlice = createSlice({
     edit: (state, action: PayloadAction<Record>) => {
       state.og = action.payload;
     },
+    // clean up when leaving edit page
     clearEdit: (state) => {
       state.og = undefined;
+    },
+    // use for resetting cat when a record is created or updated
+    markReset: (state) => {
+      state.reset = true;
+    },
+    markOutReset: (state) => {
+      state.reset = false;
     },
   },
 });
 
-export const { edit, clearEdit } = recordEditorSlice.actions;
+export const { edit, clearEdit, markReset, markOutReset } = recordEditorSlice.actions;
 export const selectRecordEditor = (state: RootState) => state.recordEditor;
 
 export default recordEditorSlice.reducer;

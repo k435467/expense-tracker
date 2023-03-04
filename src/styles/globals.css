@@ -2,21 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  background-color: #fff;
-  height: 100vh;
-}
-
-body {
-  margin: 0;
-  height: 100%;
-  overflow: hidden;
-}
-
-#__next {
-  height: 100%;
-}
-
 @layer utilities {
   .translate-center {
     transform: translate(-50%, -50%);
@@ -28,4 +13,104 @@ body {
     padding-left: 8px;
     padding-right: 8px;
   }
+}
+
+:root {
+  background-color: #fff;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  overflow: hidden auto;
+}
+
+button {
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1)
+}
+
+#__next {
+  position: relative;
+}
+
+/* Transitions */
+
+.collapse-enter {
+  max-height: 0;
+  opacity: 0;
+}
+.collapse-enter-active {
+  max-height: 3.25rem;
+  opacity: 1;
+  transition: all 100ms;
+}
+.collapse-enter-done {
+  max-height: 3.25rem;
+  opacity: 1;
+  transition: all 100ms;
+}
+.collapse-exit {
+  max-height: 3.25rem;
+  opacity: 1;
+}
+.collapse-exit-active {
+  max-height: 0;
+  opacity: 0;
+  transition: all 100ms;
+}
+
+.fade-appear {
+  opacity: 0;
+}
+.fade-appear-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+/* Animations */
+
+@keyframes headShake {
+  0% {
+    transform: translateX(0);
+  }
+
+  6.5% {
+    transform: translateX(-6px) rotateY(-9deg);
+  }
+
+  18.5% {
+    transform: translateX(5px) rotateY(7deg);
+  }
+
+  31.5% {
+    transform: translateX(-3px) rotateY(-5deg);
+  }
+
+  43.5% {
+    transform: translateX(2px) rotateY(3deg);
+  }
+
+  50% {
+    transform: translateX(0);
+  }
+}
+.ani-headShake {
+  animation-timing-function: ease-in-out;
+  animation-name: headShake;
+  animation-duration: 900ms;
 }

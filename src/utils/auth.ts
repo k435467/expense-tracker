@@ -54,15 +54,3 @@ export const authContext = createContext<AuthState>({
 export const useAuth = () => {
   return useContext(authContext);
 };
-
-/**
- * Listen for changes on loading and authUser, redirect if needed
- */
-export const useProtectedRoute = () => {
-  const router = useRouter();
-  const { user, loading } = useAuth();
-  useEffect(() => {
-    if (!loading && !user) router.push("/");
-  }, [user, loading]);
-  return { user, loading };
-};

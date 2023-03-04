@@ -13,8 +13,6 @@ export const Switch: React.FC<{
     setValue(isRhs);
   };
 
-  // TODO - element.clientWidth
-
   return (
     <div className="grid grid-cols-2 border rounded">
       <button
