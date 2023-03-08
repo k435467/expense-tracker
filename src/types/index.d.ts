@@ -1,5 +1,13 @@
 import { IconType } from "react-icons/lib";
 
+declare global {
+  interface Window {
+    myCache?: {
+      records: any;
+    };
+  }
+}
+
 /**
  * User profile information
  */

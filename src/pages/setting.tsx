@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { signOut } from "@/firebase/google";
 import { useAuth } from "@/utils/auth";
 import { theme } from "@/utils";
+import { clearRecordsCache } from "@/utils/firestore";
 
 export default function Setting() {
   const router = useRouter();
@@ -10,6 +11,7 @@ export default function Setting() {
 
   const handleSignOut = () => {
     signOut().then(() => {
+      clearRecordsCache();
       router.push("/");
     });
   };
@@ -28,7 +30,7 @@ export default function Setting() {
         SIGN OUT
       </button>
       <div className="text-center text-slate-300">
-        version &#10; 48d3feae62b8485527eb5430b8c9ce4b151e1ce6
+        version &#10; 1841b0bbd511490e940adf2e4c5389ff31607b05
       </div>
     </div>
   );

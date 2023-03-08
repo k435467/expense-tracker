@@ -22,11 +22,8 @@ export default function Records() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  // TODO - cache
-
   // Fetch records
   useEffect(() => {
-    console.log("fetched");
     if (user?.uid) {
       setIsLoading(true);
       getRecords(user.uid, month)

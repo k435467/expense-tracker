@@ -28,6 +28,20 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+### Cloud Firestore Rules
+
+```CEL
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId}/{other=**} {
+      allow read, write: if
+          request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
+```
+
 ## My Notes
 
 1. [firebase doc](https://firebase.google.com/docs/web/setup?authuser=0)
@@ -39,5 +53,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
    1. [Page jump up when using keyboard](https://stackoverflow.com/questions/8860914/on-android-browser-the-whole-page-jumps-up-and-down-when-typing-inside-a-textbo) - z-index?
    2. [Element move on scroll](https://stackoverflow.com/questions/44679794/position-fixed-on-chrome-mobile-causing-element-to-move-on-scroll-up-down) - viewport
    3. [Mobile keyboard pushes up content](https://stackoverflow.com/questions/43702979/mobile-keyboard-pushes-up-content-because-of-an-absolutely-positioned-drawer) - parent position relative
-7. [touch and mouse together](https://medium.com/frochu/touch-and-mouse-together-76fb69114c04)
+7. [touch and mouse together](https://medium.com/frochu/touch-and-mouse-together-76fb69114c04) - click is delayed 0.3s
 8. [-webkit-tap-highlight-color](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-tap-highlight-color#specifications)
+9. [nextjs render twice](https://github.com/vercel/next.js/issues/35822)

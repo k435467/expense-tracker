@@ -23,7 +23,8 @@ import {
 } from "react-icons/md";
 import { FaRegHandshake } from "react-icons/fa";
 import { Category } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 export const theme = {
   bgR: "bg-rose-50",
@@ -92,4 +93,16 @@ export const useListSelect = () => {
     mkHandleSel,
     reset,
   };
+};
+
+/**
+ * scroll to top whenever the path change
+ */
+export const useScrollToTop = () => {
+  const router = useRouter();
+  useEffect(() => {
+    if (window) {
+      window.scrollTo(0, 0);
+    }
+  }, [router.asPath]);
 };

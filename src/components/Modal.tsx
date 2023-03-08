@@ -13,6 +13,7 @@ const ModalMain: React.FC<{
       nodeRef={nodeRef}
       appear={true}
       in={true}
+      // timeout longer
       timeout={300}
       classNames="fade"
     >
