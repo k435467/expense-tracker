@@ -22,6 +22,8 @@ export default function Records() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
+  // TODO - analyse
+
   // Fetch records
   useEffect(() => {
     if (user?.uid) {
@@ -122,7 +124,7 @@ export default function Records() {
           <div className="text-center">{records[lsSel.sel]?.title}</div>
           <button
             onClick={handleDelete}
-            className={`w-full text-white ${theme.btn} ${theme.bDangerous} ${theme.bgDangerous}`}
+            className={`w-full text-white ${theme.btn} ${theme.bT} ${theme.bgDangerous}`}
           >
             DELETE
           </button>

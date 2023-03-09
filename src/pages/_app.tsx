@@ -5,10 +5,8 @@ import { AuthUserProvider } from "@/components/Auth";
 import { Layout } from "@/components/Layout";
 import store from "@/redux/store";
 import { Provider } from "react-redux";
-import { useScrollToTop } from "@/utils";
 
 export default function App({ Component, pageProps }: AppProps) {
-  useScrollToTop();
   return (
     <Provider store={store}>
       <AuthUserProvider>

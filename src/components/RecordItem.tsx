@@ -50,7 +50,7 @@ export const RecordItem: React.FC<RecordItemProps> = ({
           <div className="grid grid-cols-2 gap-4 p-2">
             <button
               onClick={onEdit}
-              className={`w-full text-white ${theme.btn} ${theme.bG} ${theme.bgG}`}
+              className={`w-full text-white ${theme.btn} ${theme.bT} ${theme.bgG}`}
             >
               EDIT
             </button>
@@ -59,7 +59,7 @@ export const RecordItem: React.FC<RecordItemProps> = ({
                 e.stopPropagation();
                 onDelete();
               }}
-              className={`w-full text-white ${theme.btn} ${theme.bDangerous} ${theme.bgDangerous}`}
+              className={`w-full text-white ${theme.btn} ${theme.bT} ${theme.bgDangerous}`}
             >
               DELETE
             </button>

@@ -17,7 +17,15 @@
 
 :root {
   background-color: #fff;
-  height: 100vh;
+}
+
+:root.dark{
+  @apply bg-zinc-800;
+}
+
+.dark * {
+  color: rgba(255,255,255,0.8);
+  border-color: rgba(229,231,235, 0.5);
 }
 
 body {
@@ -28,6 +36,10 @@ body {
 button {
   user-select: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1)
+}
+
+.dark input {
+  background-color: transparent;
 }
 
 #__next {

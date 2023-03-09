@@ -2,10 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
-const ModalMain: React.FC<{
+interface ModalMainProp {
   onClose: () => void;
   children: React.ReactNode;
-}> = ({ onClose, children }) => {
+  narrow?: boolean;
+}
+
+const ModalMain: React.FC<ModalMainProp> = ({ onClose, children, narrow }) => {
   const nodeRef = useRef(null);
 
   return (
@@ -13,20 +16,19 @@ const ModalMain: React.FC<{
       nodeRef={nodeRef}
       appear={true}
       in={true}
-      // timeout longer
       timeout={300}
       classNames="fade"
     >
       <div
         ref={nodeRef}
         onClick={onClose}
-        className="fixed top-0 right-0 bottom-0 left-0 z-40 flex items-center bg-black/50 p-6 "
+        className="fixed top-0 right-0 bottom-0 left-0 z-40 flex justify-center items-center bg-black/50 p-6 "
       >
         <div
           onClick={(e) => {
             e.stopPropagation();
           }}
-          className="w-full rounded-2xl bg-white p-4"
+          className={`${!narrow && "w-full p-4"} rounded-2xl bg-white dark:bg-zinc-800`}
         >
           {children}
         </div>
@@ -35,11 +37,16 @@ const ModalMain: React.FC<{
   );
 };
 
-export const Modal: React.FC<{
+interface ModalProp extends ModalMainProp {
   show: boolean;
-  onClose: () => void;
-  children: React.ReactNode;
-}> = ({ show, onClose, children }) => {
+}
+
+export const Modal: React.FC<ModalProp> = ({
+  show,
+  onClose,
+  narrow,
+  children,
+}) => {
   // Prevent document undefined error on server-side
   const [hasWindow, setHasWindow] = useState(false);
   useEffect(() => {
@@ -50,7 +57,9 @@ export const Modal: React.FC<{
   return (
     <>
       {createPortal(
-        <ModalMain onClose={onClose}>{children}</ModalMain>,
+        <ModalMain onClose={onClose} narrow={narrow}>
+          {children}
+        </ModalMain>,
         document.body
       )}
     </>

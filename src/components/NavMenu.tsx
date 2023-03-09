@@ -20,9 +20,12 @@ export const NavMenu: React.FC<{}> = () => {
   const { asPath } = useRouter();
   const [aniIdx, setAniIdx] = useState(-1);
 
+  // TODO - imperative navigate
+  // TODO - router prefetch
+
   if (!user) return <div />;
   return (
-    <div className="grid w-full grid-cols-3 border-t bg-white">
+    <div className="grid w-full grid-cols-3 border-t bg-white dark:border-zinc-700 dark:bg-zinc-800">
       {menuItems.map((v, idx) => (
         <Link key={v.url} href={v.url}>
           <div
@@ -34,8 +37,8 @@ export const NavMenu: React.FC<{}> = () => {
           >
             <div className="relative">
               <v.Icon
-                className={`relative z-10 text-2xl text-slate-400 ${
-                  asPath.startsWith(v.url) && "text-black "
+                className={`relative z-10 text-2xl text-slate-400 dark:text-zinc-400 ${
+                  asPath.startsWith(v.url) && "text-black dark:!text-zinc-100"
                 }`}
               />
               {/* active indicator */}

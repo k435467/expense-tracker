@@ -55,4 +55,6 @@ service cloud.firestore {
    3. [Mobile keyboard pushes up content](https://stackoverflow.com/questions/43702979/mobile-keyboard-pushes-up-content-because-of-an-absolutely-positioned-drawer) - parent position relative
 7. [touch and mouse together](https://medium.com/frochu/touch-and-mouse-together-76fb69114c04) - click is delayed 0.3s
 8. [-webkit-tap-highlight-color](https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-tap-highlight-color#specifications)
-9. [nextjs render twice](https://github.com/vercel/next.js/issues/35822)
+9. [nextjs render twice](https://github.com/vercel/next.js/issues/35822) - component render twice because strict mode
+10. [router prefetch](https://nextjs.org/docs/api-reference/next/router#routerprefetch)
+11. [get img 403](https://stackoverflow.com/questions/56242788/http-403-on-images-loaded-from-googleusercontent-com) - referrerPolicy

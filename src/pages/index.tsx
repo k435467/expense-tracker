@@ -16,6 +16,7 @@ const useRedirect = () => {
       router.push("/create");
     }
   });
+  // TODO - prefetch
 };
 
 const SignInButton: React.FC<{
@@ -37,20 +38,20 @@ const SignInButton: React.FC<{
 export default function Home() {
   useRedirect();
   return (
-    <div className="flex flex-col items-center m-auto p-6 gap-4">
-      <div className="h-[10vh]" />
+    <div className="m-auto flex flex-col items-center gap-4 p-6">
+      <div className="h-20" />
       <div>
-        <MdMoneyOff className="text-7xl my-6" />
+        <MdMoneyOff className="my-6 text-7xl" />
       </div>
-      <div className="text-3xl font-bold mb-2">Sign In</div>
+      <div className="mb-2 text-3xl font-bold">Sign In</div>
 
       <SignInButton title="Continue with Google" onClick={signIn}>
         <FcGoogle className="text-lg" />
       </SignInButton>
 
-      <hr className="w-full my-2" />
+      <hr className="my-2 w-full" />
 
-      <div className="text-sm font-thin mt-[-0.25rem] flex flex-col items-center">
+      <div className="mt-[-0.25rem] flex flex-col items-center text-sm font-thin">
         Secured by Firebase
         <a
           className="underline"

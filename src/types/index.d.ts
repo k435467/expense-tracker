@@ -39,3 +39,5 @@ export interface Category {
 }
 
 export type KeyActions = "back" | "clear" | "ok";
+
+export type ThemeMode = "system" | "light" | "dark";

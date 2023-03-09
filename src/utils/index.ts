@@ -22,22 +22,25 @@ import {
   MdOutlineAccountBalanceWallet,
 } from "react-icons/md";
 import { FaRegHandshake } from "react-icons/fa";
-import { Category } from "@/types";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { Category, ThemeMode } from "@/types";
+import { useEffect, useRef, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { selectThemeMode, setTheme } from "@/redux/themeSlice";
+import { getTheme, updateTheme } from "./firestore";
 
 export const theme = {
-  bgR: "bg-rose-50",
-  bgB: "bg-cyan-50",
-  bgY: "bg-[#FDECC8]/60",
-  bLR: "border-l-rose-100",
-  bLB: "border-l-cyan-100",
-  bG: "border-emerald-400",
-  bgG: "bg-emerald-400",
-  bDangerous: "border-rose-500",
-  bgDangerous: "bg-rose-500",
+  bgR: "bg-rose-50 dark:bg-rose-500/50",
+  bgB: "bg-cyan-50 dark:bg-cyan-500/50",
+  bgY: "bg-[#FDECC8]/60 dark:bg-amber-200/20",
+  bLR: "border-l-rose-100 dark:border-l-rose-500/60",
+  bLB: "border-l-cyan-100 dark:border-l-cyan-500/60",
+  bT: "!border-transparent",
+  bgG: "bg-emerald-400 dark:bg-emerald-400/70",
+  bgDangerous: "bg-rose-500 dark:bg-rose-500/80",
   btn: "border-2 rounded p-1",
 };
+
+export const themeModes: ThemeMode[] = ["system", "light", "dark"];
 
 export const expCategories: Category[] = [
   { Icon: MdOutlineLunchDining, title: "Breakfast" },
@@ -95,14 +98,44 @@ export const useListSelect = () => {
   };
 };
 
-/**
- * scroll to top whenever the path change
- */
-export const useScrollToTop = () => {
-  const router = useRouter();
+export const useThemeMode = (userId: string | undefined) => {
+  const { themeMode } = useAppSelector(selectThemeMode);
+  const dispatch = useAppDispatch();
+  const setThemeMode = (mode: ThemeMode) => dispatch(setTheme(mode));
+
+  // fetch theme from database
+  const initTheme = useRef<ThemeMode | null>(null);
   useEffect(() => {
-    if (window) {
-      window.scrollTo(0, 0);
+    if (userId) {
+      getTheme(userId).then((v) => {
+        initTheme.current = v;
+        setThemeMode(v);
+      });
     }
-  }, [router.asPath]);
+  }, [userId]);
+
+  const turnDark = () => document?.documentElement.classList.add("dark");
+  const turnLight = () => document?.documentElement.classList.remove("dark");
+
+  useEffect(() => {
+    // update the value in database
+    if (initTheme.current && initTheme.current !== themeMode) {
+      initTheme.current = themeMode;
+      updateTheme(userId, themeMode);
+    }
+
+    if (themeMode === "system") {
+      if (window?.matchMedia("(prefers-color-scheme: dark)").matches) {
+        turnDark();
+      } else {
+        turnLight();
+      }
+    } else if (themeMode === "dark") {
+      turnDark();
+    } else {
+      turnLight();
+    }
+  }, [themeMode]);
+
+  return { themeMode, setThemeMode };
 };

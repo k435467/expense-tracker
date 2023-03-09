@@ -113,8 +113,8 @@ export const InputPanel: React.FC<{
 
   return (
     <div className="fixed bottom-0 left-0 right-0">
-      <Container className="mb-12 bg-white">
-        <div className="flex items-center border-y">
+      <Container className="mb-12 bg-white dark:bg-zinc-800">
+        <div className="flex items-center border-y dark:border-zinc-700">
           <div className="relative m-3 shrink-0 text-3xl">
             <selCat.Icon className="relative z-10 text-3xl" />
             <div

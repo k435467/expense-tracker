@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import toastReducer from "./toastSlice";
 import recordEditorReducer from "./recordEditorSlice";
+import themeSlice from "./themeSlice";
 
 const store = configureStore({
   reducer: {
     toast: toastReducer,
     recordEditor: recordEditorReducer,
+    theme: themeSlice,
   },
 });
 
