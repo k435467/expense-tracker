@@ -41,3 +41,12 @@ export interface Category {
 export type KeyActions = "back" | "clear" | "ok";
 
 export type ThemeMode = "system" | "light" | "dark";
+
+export interface ChartData {
+  value: number;
+  money: number;
+  key: string;
+  title: string;
+  color: string;
+  Icon: IconType;
+}

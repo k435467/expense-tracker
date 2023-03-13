@@ -11,12 +11,16 @@ import { FcGoogle } from "react-icons/fc";
 const useRedirect = () => {
   const router = useRouter();
   const { user, loading } = useAuth();
+
   useEffect(() => {
     if (!loading && user) {
       router.push("/create");
     }
-  });
-  // TODO - prefetch
+  }, [loading, user]);
+
+  useEffect(() => {
+    router.prefetch("/create");
+  }, []);
 };
 
 const SignInButton: React.FC<{

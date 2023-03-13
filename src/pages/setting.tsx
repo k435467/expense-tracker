@@ -48,7 +48,7 @@ export default function Setting() {
         THEME
       </button>
       <div className="p-4 text-center text-slate-300">
-        version &#10; 8f9ed817202ae02dcad094a1d9f4d2ac33af8cd4
+        version &#10; 18d4baa334f2b29780621795f686633e2fb41497
       </div>
 
       <Modal narrow onClose={() => setOpenTheme(false)} show={openTheme}>

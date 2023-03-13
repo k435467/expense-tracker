@@ -14,7 +14,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({
     <>
       <Toast />
       <Container>{children}</Container>
-      <div className="fixed bottom-0 left-0 right-0">
+      <div className="fixed bottom-[-100px] left-0 right-0 pb-[100px]">
         <Container>
           <NavMenu />
         </Container>

@@ -22,8 +22,6 @@ export default function Records() {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  // TODO - analyse
-
   // Fetch records
   useEffect(() => {
     if (user?.uid) {
@@ -67,7 +65,7 @@ export default function Records() {
   };
 
   return (
-    <div className="m-auto flex h-full flex-col items-center gap-4 p-6 pt-10 pb-12">
+    <div className="m-auto flex h-full flex-col items-center gap-4 px-6 pt-10 pb-12">
       <input
         type="month"
         min="2000-01"

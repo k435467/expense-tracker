@@ -27,6 +27,7 @@ import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { selectThemeMode, setTheme } from "@/redux/themeSlice";
 import { getTheme, updateTheme } from "./firestore";
+import { IconType } from "react-icons/lib";
 
 export const theme = {
   bgR: "bg-rose-50 dark:bg-rose-500/50",
@@ -73,6 +74,14 @@ export const incoCategories: Category[] = [
 ];
 
 export const categories = [...expCategories, ...incoCategories];
+
+export const categoryIcons = (() => {
+  const m: { [key: string]: IconType } = {};
+  categories.forEach(({ title, Icon }) => {
+    m[title] = Icon;
+  });
+  return m;
+})();
 
 /**
  * index to indicate a element is selected from a list
@@ -139,3 +148,25 @@ export const useThemeMode = (userId: string | undefined) => {
 
   return { themeMode, setThemeMode };
 };
+
+const chrtOpct = "0.7";
+export const chartColors = [
+  `rgba(244,63,94,${chrtOpct})`,
+  `rgba(236,72,153,${chrtOpct})`,
+  `rgb(217,70,239,${chrtOpct})`,
+  `rgb(168,85,247,${chrtOpct})`,
+  `rgb(139,92,246,${chrtOpct})`,
+  `rgb(99,102,241,${chrtOpct})`,
+  `rgb(59,130,246,${chrtOpct})`,
+  `rgb(14,165,233,${chrtOpct})`,
+  `rgb(6,182,212,${chrtOpct})`,
+  `rgb(20,184,166,${chrtOpct})`,
+  `rgb(16,185,129,${chrtOpct})`,
+  `rgb(34,197,94,${chrtOpct})`,
+  `rgb(132,204,22,${chrtOpct})`,
+  `rgb(234,179,8,${chrtOpct})`,
+  `rgb(245,158,11,${chrtOpct})`,
+  `rgb(249,115,22,${chrtOpct})`,
+  `rgb(239,68,68,${chrtOpct})`,
+  `rgb(120,113,108,${chrtOpct})`,
+];
