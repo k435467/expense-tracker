@@ -1,8 +1,21 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <img src="screenshot/screenshot.jpg
+  " width="300">
+</p>
+
+## Features
+
+- No UI component library[^1]
+- Optimized for mobile devices
+- Dark theme
+- Typescript / React / Redux / Nextjs
+- Firebase: auth / firestore
+
+[^1]: expect icon and chart
 
 ## Getting Started
 
-First fill env variables for `firebaseConfig` in `src/firebase/index.js`.
+First fill env variables for `firebaseConfig`.
 
 `.env.local`
 

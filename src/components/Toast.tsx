@@ -10,7 +10,7 @@ export const Toast: React.FC<{}> = () => {
   const timeoutID = useRef<NodeJS.Timeout>();
 
   // Clear after duration.
-  // If there is another display() being dispatched,
+  // If there is another showToast() being dispatched,
   // remove previous timeout to avoid extra clear()
   useEffect(() => {
     if (timeoutID.current) {

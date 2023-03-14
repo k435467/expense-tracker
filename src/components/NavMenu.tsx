@@ -34,8 +34,10 @@ export const NavMenu: React.FC<{}> = () => {
       {menuItems.map((v, idx) => (
         <div
           key={v.url}
-          onClick={() => router.push(v.url)}
-          onTouchStart={() => setAniIdx(idx)}
+          onClick={() => {
+            setAniIdx(idx);
+            router.push(v.url);
+          }}
           onAnimationEnd={() => setAniIdx(-1)}
           className={`flex w-full items-center justify-center p-3 pb-6 ${
             aniIdx === idx && "ani-headShake"

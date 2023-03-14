@@ -107,7 +107,7 @@ export default function Statistics() {
                   className="h-4 w-4 rounded-full"
                   style={{ backgroundColor: color }}
                 />
-                <Icon style={{ color: "rgba(0,0,0,0.7)" }} />
+                <Icon />
                 <div className="flex-grow">{title}</div>
                 <div>${money.toLocaleString("en-US")}</div>
               </div>

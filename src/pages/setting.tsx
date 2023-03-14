@@ -47,9 +47,12 @@ export default function Setting() {
       >
         THEME
       </button>
-      <div className="p-4 text-center text-slate-300">
-        version &#10; 18d4baa334f2b29780621795f686633e2fb41497
-      </div>
+      <a
+        className="m-4 text-center text-slate-300 no-underline"
+        href="https://github.com/k435467/expense-tracker"
+      >
+        version &#10; 63fa5f1a52faa2f3fa9d8730b280a2791619d24c
+      </a>
 
       <Modal narrow onClose={() => setOpenTheme(false)} show={openTheme}>
         <div className="divide-y divide-solid divide-zinc-500">
