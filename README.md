@@ -10,7 +10,7 @@
 - Typescript / React / Redux / Nextjs
 - Firebase: auth / firestore
 
-[^1]: expect icon and chart
+[^1]: except icon and chart
 
 ## Getting Started
 
