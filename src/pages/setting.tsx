@@ -51,7 +51,7 @@ export default function Setting() {
         className="m-4 text-center text-slate-300 no-underline"
         href="https://github.com/k435467/expense-tracker"
       >
-        version &#10; 63fa5f1a52faa2f3fa9d8730b280a2791619d24c
+        version &#10; cee3bd7f83ccba7b82a4ac68fcb003198a9251bf
       </a>
 
       <Modal narrow onClose={() => setOpenTheme(false)} show={openTheme}>
