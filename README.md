@@ -2,6 +2,8 @@
   <img src="screenshot/screenshot.jpg" width="300">
 </p>
 
+A accounting website built by NextJS provides users with the functions of accounting and viewing pie charts. After logging in with a Google account verified by Firebase, users can create and edit twenty-two income and expenditure items, view monthly details, totals, and pie charts. You can choose a light or dark theme according to your needs
+
 ## Features
 
 - No UI component library[^1]
